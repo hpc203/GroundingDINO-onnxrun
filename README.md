@@ -1,5 +1,5 @@
 在运行程序时，要注意输入的提示词的格式，类别之间以" . "隔开，并且确保类别名称在词典文件
-vocab.txt里是存在的，否则可能会检测不到目标的。
+vocab.txt里是存在的，而且输入提示词里的类别名称是你想要检测的目标类别，否则可能会检测不到目标的。
 
 如果要导出onnx文件，把export_onnx.py放在https://github.com/wenyi5608/GroundingDINO
 里运行就可以生成onnx文件的。这个仓库里的代码跟官方仓库https://github.com/IDEA-Research/GroundingDINO
