@@ -40,8 +40,11 @@ def get_phrases_from_posmap(posmap, input_ids, tokenizer, left_idx=0, right_idx=
         posmap[0: left_idx + 1] = False
         posmap[right_idx:] = False
         non_zero_idx = np.nonzero(posmap)[0].tolist()
-        token_ids = [input_ids[i] for i in non_zero_idx]
-        return tokenizer.convert_ids_to_tokens(token_ids)[0]
+        if len(non_zero_idx)>0:
+            token_ids = [input_ids[i] for i in non_zero_idx]
+            return tokenizer.convert_ids_to_tokens(token_ids)[0]
+        else:
+            return None
     else:
         raise NotImplementedError("posmap must be 1-dim")
 
@@ -111,6 +114,8 @@ class GroundingDINO():
         pred_phrases = []
         for logit, box in zip(logits_filt, boxes_filt):
             pred_phrase = get_phrases_from_posmap(logit > self.text_threshold, input_ids[0, :], self.tokenizer)
+            if pred_phrase is None:
+                continue
             if self.with_logits:
                 pred_phrases.append(pred_phrase + f"({str(logit.max())[:4]})")
             else:
