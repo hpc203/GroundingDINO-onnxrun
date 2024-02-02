@@ -43,6 +43,7 @@ def get_phrases_from_posmap(posmap, input_ids, tokenizer, left_idx=0, right_idx=
         if len(non_zero_idx)>0:
             token_ids = [input_ids[i] for i in non_zero_idx]
             return tokenizer.convert_ids_to_tokens(token_ids)[0]
+            ##return ' '.join(tokenizer.convert_ids_to_tokens(token_ids))  ###原始是返回一段描述的,如果只是检测目标,可以只返回一个单词
         else:
             return None
     else:
